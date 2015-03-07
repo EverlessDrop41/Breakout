@@ -16,8 +16,8 @@ public class BallBehaviour : MonoBehaviour {
 	int StuckCounter;
 
 	void Start () {
-		RB = this.gameObject.rigidbody2D;
-		speaker = this.gameObject.audio;
+		RB = this.gameObject.GetComponent<Rigidbody2D>();
+		speaker = this.gameObject.GetComponent<AudioSource>();
 		RB.AddForce(Vector2.up,ForceMode2D.Impulse);
 	}
 

@@ -44,6 +44,8 @@ public class BreakoutBlock : MonoBehaviour {
 
 	void Update () {
 		if (currentHealth <= 0){
+            ScoreManager sm = GameObject.FindObjectOfType<ScoreManager>();
+            sm.SendMessage("BlockDestroyed");
 			Destroy(this.gameObject);
 		}
 	}
