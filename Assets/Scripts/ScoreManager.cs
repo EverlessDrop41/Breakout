@@ -20,6 +20,8 @@ public class ScoreManager : MonoBehaviour {
 	private int NumberOfBlocksLeft;
 	private MinuteTimer CurrentScoreTimer = new MinuteTimer();
 
+    private bool HasSaveFile = false;
+
 	void Start () 
     {
 		CurrentScoreTimer.start();
@@ -31,11 +33,13 @@ public class ScoreManager : MonoBehaviour {
             ScoreData.OpenFile(out HighScoreData, FileNameAndPath, FileExtension);
             HighScore = new MinuteTimer(HighScoreData);
 
+            HasSaveFile = true;
+
             HighScoreDisplay.text = string.Format("Best Time: {0}", HighScore.getTimeString());
         }
         else
         {
-            HighScoreDisplay.text = "Best Time 0:00";
+            HighScoreDisplay.text = "Best Time: Unavailable";
             HighScore = new MinuteTimer();
         }
 	}
@@ -48,11 +52,10 @@ public class ScoreManager : MonoBehaviour {
 
 	void BlockDestroyed () 
     {
-        Debug.Log("Block Destroyed!");
         NumberOfBlocksLeft--;
         if (NumberOfBlocksLeft <= 0)
         {
-            if (ScoreData.HighScoreBeat(Score, HighScore))
+            if (ScoreData.HighScoreBeat(Score, HighScore) || !HasSaveFile)
             {
                 //Larger also means slower in this context
                 ScoreData.Save(FileNameAndPath, FileExtension, new ScoreData(Score));

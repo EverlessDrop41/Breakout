@@ -31,13 +31,10 @@ public class BallBehaviour : MonoBehaviour {
     }
 
 	void FixedUpdate () {
-        Debug.Log(Input.GetKeyDown(KeyCode.Space));
-
         if (!hasStarted)
         {
             if (startInputReceived)
             {
-                Debug.Log("Launch!");
                 RB.AddForce(Vector2.up, ForceMode2D.Impulse);
                 hasStarted = true;
             }
@@ -70,5 +67,9 @@ public class BallBehaviour : MonoBehaviour {
 			coll.gameObject.SendMessage("TakeDamage");
 			speaker.Play();
 		}
+        else if (coll.gameObject.tag == "BallCatcher") {
+            speaker.Play();
+            FindObjectOfType<MainGameControl>().ResetBall(); //MainGameControll is a singleton
+        }
 	}
 }
