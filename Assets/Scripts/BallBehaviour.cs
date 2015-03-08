@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Threading;
 
 [RequireComponent(typeof(Rigidbody2D),typeof(AudioSource))]
 public class BallBehaviour : MonoBehaviour {
@@ -15,26 +14,55 @@ public class BallBehaviour : MonoBehaviour {
 	float CurrentY;
 	int StuckCounter;
 
+    bool hasStarted = false;
+    bool startInputReceived = false;
+
 	void Start () {
 		RB = this.gameObject.GetComponent<Rigidbody2D>();
 		speaker = this.gameObject.GetComponent<AudioSource>();
-		RB.AddForce(Vector2.up,ForceMode2D.Impulse);
 	}
 
-	void FixedUpdate () {
-		RB.velocity = Vector2.ClampMagnitude(RB.velocity,MaxVelocity);
+    void Update()
+    {
+        if (Input.GetButtonDown("Start"))
+        {
+            startInputReceived = true;
+        }
+    }
 
-		CurrentY = this.gameObject.transform.position.y;
-		if (CurrentY == PrevY){
-			StuckCounter++;
-		}
-		else {
-			StuckCounter = 0;
-		}
-		if (StuckCounter > StuckAmountMax){
-			RB.AddForce(Vector2.up,ForceMode2D.Impulse);
-		}
-		PrevY = CurrentY; 
+	void FixedUpdate () {
+        Debug.Log(Input.GetKeyDown(KeyCode.Space));
+
+        if (!hasStarted)
+        {
+            if (startInputReceived)
+            {
+                Debug.Log("Launch!");
+                RB.AddForce(Vector2.up, ForceMode2D.Impulse);
+                hasStarted = true;
+            }
+            
+        }
+        else
+        {
+            RB.velocity = Vector2.ClampMagnitude(RB.velocity, MaxVelocity);
+
+            CurrentY = this.gameObject.transform.position.y;
+            if (CurrentY == PrevY)
+            {
+                StuckCounter++;
+            }
+            else
+            {
+                StuckCounter = 0;
+            }
+            if (StuckCounter > StuckAmountMax)
+            {
+                RB.AddForce(Vector2.up, ForceMode2D.Impulse);
+            }
+            PrevY = CurrentY; 
+        }
+		
 	}
 
 	void OnCollisionEnter2D(Collision2D coll){
