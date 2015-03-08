@@ -30,6 +30,11 @@ public class MainGameControl : MonoBehaviour {
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+
         LivesDisplayer.text = string.Format(LivesMessageFormat, currentLives);
     }
 
