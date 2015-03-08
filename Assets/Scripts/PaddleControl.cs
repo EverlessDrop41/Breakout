@@ -30,7 +30,7 @@ public class PaddleControl : MonoBehaviour {
 
 		//Right Ray
 		if (moveRightDetect.collider != null && moveRightDetect.collider.tag != "Ball"){
-			Debug.Log("MoveRight hit detected");
+			//Debug.Log("MoveRight hit detected");
 			Debug.DrawRay(RB.position,new Vector2(rayDist,0),Color.red);
 			//If input for moving left is not received we stop the paddle from moving
 			if (!(AxisInput <= 0)){
@@ -43,7 +43,7 @@ public class PaddleControl : MonoBehaviour {
 
 		//Left Ray
 		if (moveLeftDetect.collider != null && moveLeftDetect.collider.tag != "Ball"){
-			Debug.Log("MoveLeft hit detected");
+			//Debug.Log("MoveLeft hit detected");
 			Debug.DrawRay(RB.position,new Vector2(-rayDist,0),Color.red);
 			//If input for moving right is not received we stop the paddle from moving
 			if (!(AxisInput >= 0)){

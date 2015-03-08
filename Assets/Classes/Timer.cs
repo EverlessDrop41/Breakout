@@ -3,7 +3,7 @@ using System.Collections;
 using System.Timers;
 using UnityEngine;
 
-public class MinuteTimer : MonoBehaviour {
+public class MinuteTimer {
 	public static readonly int minuteInSeconds = 60;
 
 	private int seconds = 0;

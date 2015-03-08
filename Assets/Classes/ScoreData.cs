@@ -22,11 +22,11 @@ public sealed class ScoreData {
 	/// <summary>
 	/// Detects if the score is higher than the highscore
 	/// </summary>
-	/// <returns><c>true</c> If Score is larger than HighScore, <c>false</c> otherwise.</returns>
+	/// <returns><c>true</c> If Score is quicker than HighScore, <c>false</c> otherwise.</returns>
 	/// <param name="Score">Score</param>
 	/// <param name="HighScore">Current HighScore</param>
 	public static bool HighScoreBeat(MinuteTimer Score,MinuteTimer HighScore){
-		return Score.LargerThan(HighScore);
+		return !Score.LargerThan(HighScore);
 	}
 	
 	public ScoreData(MinuteTimer HighScoreTimer) {
