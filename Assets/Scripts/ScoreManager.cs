@@ -60,8 +60,8 @@ public class ScoreManager : MonoBehaviour {
                 //Larger also means slower in this context
                 ScoreData.Save(FileNameAndPath, FileExtension, new ScoreData(Score));
             }
-            
-            Application.LoadLevel(0);
+
+            MainGameControl.EndGame(true);
         }
 	}
 }

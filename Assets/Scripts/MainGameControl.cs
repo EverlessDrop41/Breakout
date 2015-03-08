@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class MainGameControl : MonoBehaviour {
@@ -6,25 +7,30 @@ public class MainGameControl : MonoBehaviour {
     public Transform BallSpawnPosition;
     public GameObject Ball;
 
-    private static bool hasSingleton;
+    public Text LivesDisplayer;
+    public string LivesMessageFormat = "Lives Left: {0}";
+    public int maxLives = 3;
+    private int currentLives;
 
     private GameObject currentBall;
 
     void Start()
     {
-        if (MainGameControl.hasSingleton)
+        if (FindObjectsOfType<MainGameControl>().Length > 1)
         {
             Destroy(this);
-        }
-        else
-        {
-            hasSingleton = true;
         }
     }
 
     void Awake()
     {
         CreateBall();
+        currentLives = maxLives;
+    }
+
+    private void Update()
+    {
+        LivesDisplayer.text = string.Format(LivesMessageFormat, currentLives);
     }
 
     private void CreateBall()
@@ -35,6 +41,17 @@ public class MainGameControl : MonoBehaviour {
     public void ResetBall()
     {
         Destroy(currentBall);
+        currentLives--;
+        if (currentLives < 0)
+        {
+            EndGame(false);
+        }
         CreateBall();
+
+    }
+
+    public static void EndGame(bool won)
+    {       
+        Application.LoadLevel(Application.loadedLevel);
     }
 }
