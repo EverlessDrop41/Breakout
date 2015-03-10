@@ -38,7 +38,7 @@ public class MinuteTimer {
 	}
 
 	public string getTimeString() {
-		string retStr = String.Format("{0}:{1}",minutes,seconds);
+		string retStr = String.Format("{0}:{1:00}",minutes,seconds);
 		return retStr;
 	} 
 
