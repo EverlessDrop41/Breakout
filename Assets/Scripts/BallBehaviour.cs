@@ -5,7 +5,6 @@ using System.Collections;
 public class BallBehaviour : MonoBehaviour {
 
 	public float MaxVelocity;
-	public int StuckAmountMax = 60;
 
 	private Rigidbody2D RB;
 	private AudioSource speaker;
@@ -35,7 +34,7 @@ public class BallBehaviour : MonoBehaviour {
         {
             if (startInputReceived)
             {
-                RB.AddForce(Vector2.up, ForceMode2D.Impulse);
+                RB.AddForce(Vector2.right, ForceMode2D.Impulse);
                 hasStarted = true;
             }
             
@@ -43,21 +42,6 @@ public class BallBehaviour : MonoBehaviour {
         else
         {
             RB.velocity = Vector2.ClampMagnitude(RB.velocity, MaxVelocity);
-
-            CurrentY = this.gameObject.transform.position.y;
-            if (CurrentY == PrevY)
-            {
-                StuckCounter++;
-            }
-            else
-            {
-                StuckCounter = 0;
-            }
-            if (StuckCounter > StuckAmountMax)
-            {
-                RB.AddForce(Vector2.up, ForceMode2D.Impulse);
-            }
-            PrevY = CurrentY; 
         }
 		
 	}
@@ -70,6 +54,12 @@ public class BallBehaviour : MonoBehaviour {
         else if (coll.gameObject.tag == "BallCatcher") {
             speaker.Play();
             FindObjectOfType<MainGameControl>().ResetBall(); //MainGameControll is a singleton
+        }
+
+        if (RB.velocity.y < 0.5 && RB.velocity.y >= -0.05)
+        {
+            float rand = Random.Range(1, 0);
+            RB.velocity = new Vector2(RB.velocity.x, RB.velocity.y + rand);
         }
 	}
 }
