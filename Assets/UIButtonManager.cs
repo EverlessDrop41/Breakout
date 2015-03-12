@@ -18,4 +18,9 @@ public class UIButtonManager : MonoBehaviour
     {
         Application.Quit();
     }
+
+    public void setQuality(int quality)
+    {
+        QualitySettings.SetQualityLevel(quality);
+    }
 }

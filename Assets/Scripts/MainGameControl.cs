@@ -32,7 +32,7 @@ public class MainGameControl : MonoBehaviour {
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Application.Quit();
+            Application.LoadLevel("MainMenu");
         }
 
         LivesDisplayer.text = string.Format(LivesMessageFormat, currentLives);

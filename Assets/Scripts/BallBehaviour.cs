@@ -34,7 +34,7 @@ public class BallBehaviour : MonoBehaviour {
         {
             if (startInputReceived)
             {
-                RB.AddForce(Vector2.right, ForceMode2D.Impulse);
+                RB.AddForce(Vector2.up, ForceMode2D.Impulse);
                 hasStarted = true;
             }
             
