@@ -9,6 +9,8 @@ public class BallBehaviour : MonoBehaviour {
 	private Rigidbody2D RB;
 	private AudioSource speaker;
 
+    public bool GodMode = false;
+
 	float PrevY;
 	float CurrentY;
 	int StuckCounter;
@@ -51,12 +53,20 @@ public class BallBehaviour : MonoBehaviour {
 			coll.gameObject.SendMessage("TakeDamage");
 			speaker.Play();
 		}
-        else if (coll.gameObject.tag == "BallCatcher") {
+        else if (coll.gameObject.tag == "BallCatcher" && !GodMode) {
             speaker.Play();
             FindObjectOfType<MainGameControl>().ResetBall(); //MainGameControll is a singleton
         }
+        else if (coll.gameObject.tag == "TopWall")
+        {
+            if (coll.relativeVelocity.y < 1 && coll.relativeVelocity.y > -0.001)
+            {
+                RB.AddForce(new Vector2(0, -1), ForceMode2D.Impulse);
+                Debug.Log("TopWall");
+            }
+        }
 
-        if (RB.velocity.y < 0.5 && RB.velocity.y >= -0.05)
+        if (coll.relativeVelocity.y < 0.5 && coll.relativeVelocity.y >= -0.001)
         {
             float rand = Random.Range(1, 0);
             RB.velocity = new Vector2(RB.velocity.x, RB.velocity.y + rand);

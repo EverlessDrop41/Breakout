@@ -30,7 +30,7 @@ public class MainGameControl : MonoBehaviour {
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetButtonDown("Cancel"))
         {
             Application.LoadLevel("MainMenu");
         }
