@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System;
 
 public class ResolutionManager : MonoBehaviour {
 
     public Toggle Fullscreen;
     public InputField widthInput;
     public InputField heightInput;
+    public Text errorDisplay;
 
     private int MonitorHeight;
     private int MonitorWidth;
@@ -18,6 +20,7 @@ public class ResolutionManager : MonoBehaviour {
     {
         MonitorHeight = Screen.currentResolution.height;
         MonitorWidth = Screen.currentResolution.width;
+        Fullscreen.isOn = Screen.fullScreen;
     }
 
     void Update()
@@ -25,13 +28,33 @@ public class ResolutionManager : MonoBehaviour {
             //TODO: WORKING CODE
     }
 
-    void UpdateWidth(int width)
+    public void UpdateWidth(int width)
     {
         desiredWidth = width;
     }
 
-    void UpdateHeight(int height)
+    public void UpdateHeight(dynamic height)
     {
-        desiredHeight = height;
+        object varHeight = height;
+        string strHeight = Convert.ToString(varHeight);
+        int.TryParse(strHeight, out desiredHeight);
+        Debug.Log(desiredHeight);
+    }
+
+    public void UpdateResolution()
+    {
+        if (desiredWidth > MonitorWidth || desiredHeight > MonitorHeight)
+        {
+            errorDisplay.text = "Monitor is too small";
+        }
+        else
+        {
+            Screen.SetResolution(desiredHeight, desiredWidth, Screen.fullScreen);
+        }
+    }
+
+    public void ToggleFullscreen()
+    {
+        Screen.fullScreen = !Screen.fullScreen;
     }
 }
