@@ -6,9 +6,9 @@ using System;
 public class ResolutionManager : MonoBehaviour {
 
     public Toggle Fullscreen;
-    public InputField widthInput;
-    public InputField heightInput;
     public Text errorDisplay;
+
+    private bool initialToggleDone = false;
 
     private int MonitorHeight;
     private int MonitorWidth;
@@ -21,23 +21,36 @@ public class ResolutionManager : MonoBehaviour {
         MonitorHeight = Screen.currentResolution.height;
         MonitorWidth = Screen.currentResolution.width;
         Fullscreen.isOn = Screen.fullScreen;
+        initialToggleDone = true;
     }
 
-    void Update()
+    public void UpdateWidth(dynamic width)
     {
-            //TODO: WORKING CODE
-    }
-
-    public void UpdateWidth(int width)
-    {
-        desiredWidth = width;
+        object varWidth = width;
+        string strWidth = Convert.ToString(varWidth);
+        if (!int.TryParse(strWidth, out desiredWidth))
+        {
+            errorDisplay.text = "Width must be a number";
+        }
+        else
+        {
+            errorDisplay.text = "";
+        }
+        Debug.Log(desiredHeight);
     }
 
     public void UpdateHeight(dynamic height)
     {
         object varHeight = height;
         string strHeight = Convert.ToString(varHeight);
-        int.TryParse(strHeight, out desiredHeight);
+        if (!int.TryParse(strHeight, out desiredHeight))
+        {
+            errorDisplay.text = "Height must be a number";
+        }
+        else
+        {
+            errorDisplay.text = "";
+        }
         Debug.Log(desiredHeight);
     }
 
@@ -47,14 +60,20 @@ public class ResolutionManager : MonoBehaviour {
         {
             errorDisplay.text = "Monitor is too small";
         }
+        else if (desiredWidth < 640 || desiredHeight < 480)
+        {
+            errorDisplay.text = "Chose a higher resolution";
+        }
         else
         {
-            Screen.SetResolution(desiredHeight, desiredWidth, Screen.fullScreen);
+            Screen.SetResolution(desiredWidth, desiredHeight, Screen.fullScreen);
+            errorDisplay.text = "";
         }
     }
 
     public void ToggleFullscreen()
     {
-        Screen.fullScreen = !Screen.fullScreen;
+        if (initialToggleDone)
+            Screen.fullScreen = !Screen.fullScreen;
     }
 }
