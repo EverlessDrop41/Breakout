@@ -37,7 +37,6 @@ public class PaddleControl : MonoBehaviour {
 	void FixedUpdate () {
         if (VerticalMovement)
         {
-            Debug.Log("Vert: " + VertSpeed);
             AxisInput = VertSpeed;
             this.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, AxisInput * speed);
 
@@ -77,7 +76,6 @@ public class PaddleControl : MonoBehaviour {
         }
         else
         {
-            Debug.Log("Horz: " + HorzSpeed);
             AxisInput = HorzSpeed;
             this.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(AxisInput * speed, 0);
 

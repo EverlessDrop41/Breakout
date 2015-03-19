@@ -27,6 +27,7 @@ public class ScoreManager : MonoBehaviour {
 		CurrentScoreTimer.start();
 		NumberOfBlocks = GameObject.FindGameObjectsWithTag("Block").Length;
 		NumberOfBlocksLeft = NumberOfBlocks;
+#if !(UNITY_WEBPLAYER)
         if (File.Exists(ScoreData.GetFilePath(FileNameAndPath + FileExtension)))
         {
             ScoreData HighScoreData;
@@ -42,6 +43,7 @@ public class ScoreManager : MonoBehaviour {
             HighScoreDisplay.text = "Best Time: Unavailable";
             HighScore = new MinuteTimer();
         }
+#endif
 	}
 
 	void Update () 
@@ -55,12 +57,13 @@ public class ScoreManager : MonoBehaviour {
         NumberOfBlocksLeft--;
         if (NumberOfBlocksLeft <= 0)
         {
+            #if !(UNITY_WEBPLAYER)
             if (ScoreData.HighScoreBeat(Score, HighScore) || !HasSaveFile)
             {
                 //Larger also means slower in this context
                 ScoreData.Save(FileNameAndPath, FileExtension, new ScoreData(Score));
             }
-
+            #endif
             MainGameControl.EndGame(true);
         }
 	}
