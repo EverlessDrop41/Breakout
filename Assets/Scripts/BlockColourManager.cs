@@ -17,8 +17,14 @@ public class BlockColourManager : EditorWindow {
     void OnGUI()
     {
         GUILayout.Label("Set Sprites", EditorStyles.boldLabel);
-        EditorGUILayout.BeginHorizontal();
-        SuperHardBlock = EditorGUILayout.ObjectField(SuperHardBlock, typeof(Sprite), true);
-        EditorGUILayout.EndHorizontal();
+
+        GUILayout.Label("Super Hard Block", EditorStyles.label);
+        SuperHardBlock =  EditorGUILayout.ObjectField(SuperHardBlock,typeof(Sprite), false) as Sprite;
+        GUILayout.Label("Hard Block", EditorStyles.label);
+        HardBlock = EditorGUILayout.ObjectField(HardBlock, typeof(Sprite), false) as Sprite;
+        GUILayout.Label("Medium Block", EditorStyles.label);
+        MediumBlock = EditorGUILayout.ObjectField(MediumBlock, typeof(Sprite), false) as Sprite;
+        GUILayout.Label("Weak Block", EditorStyles.label);
+        WeakBlock = EditorGUILayout.ObjectField(WeakBlock, typeof(Sprite), false) as Sprite;
     }
 }
