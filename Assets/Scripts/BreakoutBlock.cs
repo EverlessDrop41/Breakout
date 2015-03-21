@@ -26,19 +26,15 @@ public class BreakoutBlock : MonoBehaviour {
 		switch (Type) {
 			case blockType.weak:
 				maxHealth = 1;
-                SprRend.sprite = BlockColourManager.Weak;
 				break;
 			case blockType.medium:
 				maxHealth = 2;
-                SprRend.sprite = BlockColourManager.Medium;
 				break;
 			case blockType.hard:
 				maxHealth = 3;
-                SprRend.sprite = BlockColourManager.Hard;
 				break;
 			case blockType.superHard:
 				maxHealth = 4;
-                SprRend.sprite = BlockColourManager.SuperHard;
 				break;
 			default:
 				Debug.LogError("The type of block is not defined");
