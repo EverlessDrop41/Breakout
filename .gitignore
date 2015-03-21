@@ -1,6 +1,7 @@
 [Ll]ibrary/
 [Tt]emp/
 [Oo]bj/
+[Bb]uilds/
 [Bb]uild/
 #This Project
 Builds/WebGL/*

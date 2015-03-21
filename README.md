@@ -11,3 +11,7 @@ I Wanna Play!
 Great! Currently all distrubution is done through [Game Jolt][GameJolt], If you see this distubuted elsewhere than please report it to me via the issues tab.
 
 [GameJolt]: http://gamejolt.com/games/arcade/phhysiblocks/54829/
+
+Builds Folder
+=============
+From 21/03/2015 the builds folder will no longer be updated, if you are interested in playing please see the above section.
