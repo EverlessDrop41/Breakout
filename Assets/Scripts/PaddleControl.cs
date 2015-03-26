@@ -32,6 +32,20 @@ public class PaddleControl : MonoBehaviour {
     {
         HorzSpeed = Input.GetAxis("Horizontal");
         VertSpeed = Input.GetAxis("Vertical");
+
+        #if UNITY_ANDROID
+            for (int i = 0; i < Input.touches.Length; i++)
+            {
+                if (Input.touches[i].position.x >= Screen.width / 2)
+                {
+                    HorzSpeed = 1;
+                }
+                else if (Input.touches[i].position.x <= Screen.width / 2)
+                {
+                    HorzSpeed = -1;
+                }
+            }
+        #endif
     }
 
 	void FixedUpdate () {

@@ -25,7 +25,7 @@ public class BallBehaviour : MonoBehaviour {
 
     void Update()
     {
-        if (Input.GetButtonDown("Start"))
+        if (Input.GetButtonDown("Start") || Input.touches.Length > 0)
         {
             startInputReceived = true;
         }
