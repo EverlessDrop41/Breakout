@@ -7,6 +7,8 @@ public class MainGameControl : MonoBehaviour {
     public Transform BallSpawnPosition;
     public GameObject Ball;
 
+    public Button MobileButton;
+
     public Text LivesDisplayer;
     public string LivesMessageFormat = "Lives Left: {0}";
     public int maxLives = 3;
@@ -19,6 +21,23 @@ public class MainGameControl : MonoBehaviour {
         if (FindObjectsOfType<MainGameControl>().Length > 1)
         {
             Destroy(this);
+        }
+
+        #if !UNITY_ANDROID
+            MobileButton.gameObject.SetActive(false);
+        #endif
+    }
+
+    public void MobileLaunchButton()
+    {
+        try
+        {
+            currentBall.GetComponent<BallBehaviour>().MobileLaunch();
+            MobileButton.gameObject.SetActive(false);
+        }
+        catch
+        {
+            Debug.Log("Ball does not have  BallBehaviour script attached");
         }
     }
 
@@ -40,7 +59,8 @@ public class MainGameControl : MonoBehaviour {
 
     private void CreateBall()
     {
-        currentBall = Instantiate(Ball, BallSpawnPosition.position, Quaternion.identity) as GameObject;
+        currentBall = (Instantiate(Ball, BallSpawnPosition.position, Quaternion.identity) as GameObject);
+        MobileButton.gameObject.SetActive(true);
     }
 
     public void ResetBall()
@@ -52,7 +72,9 @@ public class MainGameControl : MonoBehaviour {
             EndGame(false);
         }
         CreateBall();
-
+#if !UNITY_ANDROID
+        MobileButton.gameObject.SetActive(false);
+#endif
     }
 
     public static void EndGame(bool won)

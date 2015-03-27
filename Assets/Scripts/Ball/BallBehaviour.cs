@@ -25,7 +25,7 @@ public class BallBehaviour : MonoBehaviour {
 
     void Update()
     {
-        if (Input.GetButtonDown("Start") || Input.touches.Length > 0)
+        if (Input.GetButtonDown("Start") /*|| Input.touches.Length > 0*/)
         {
             startInputReceived = true;
         }
@@ -47,6 +47,11 @@ public class BallBehaviour : MonoBehaviour {
         }
 		
 	}
+
+    public void MobileLaunch()
+    {
+        startInputReceived = true;
+    }
 
 	void OnCollisionEnter2D(Collision2D coll){
 		if (coll.gameObject.tag == "Block") {
