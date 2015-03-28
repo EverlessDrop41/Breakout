@@ -64,7 +64,8 @@ public class ScoreManager : MonoBehaviour {
                 ScoreData.Save(FileNameAndPath, FileExtension, new ScoreData(Score));
             }
             #endif
-            MainGameControl.EndGame(true);
+            GetComponent<MainGameControl>().EndGame(true);
+            //MainGameControl.EndGame(true);
         }
 	}
 }

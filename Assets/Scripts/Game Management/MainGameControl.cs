@@ -1,11 +1,15 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Advertisements;
+
 using System.Collections;
 
 public class MainGameControl : MonoBehaviour {
 
     public Transform BallSpawnPosition;
     public GameObject Ball;
+
+    public Fader fader;
 
     public Button MobileButton;
 
@@ -22,9 +26,10 @@ public class MainGameControl : MonoBehaviour {
         {
             Destroy(this);
         }
-
+        Advertisement.UnityDeveloperInternalTestMode = true;
         #if !UNITY_ANDROID
             MobileButton.gameObject.SetActive(false);
+            Advertisement.Initialize("28602");
         #endif
     }
 
@@ -69,7 +74,7 @@ public class MainGameControl : MonoBehaviour {
         currentLives--;
         if (currentLives < 0)
         {
-            EndGame(false);
+            this.EndGame(false);
         }
         CreateBall();
 #if !UNITY_ANDROID
@@ -77,8 +82,19 @@ public class MainGameControl : MonoBehaviour {
 #endif
     }
 
-    public static void EndGame(bool won)
-    {       
-        Application.LoadLevel(Application.loadedLevel);
+    public void EndGame(bool won)
+    {
+
+        if (Advertisement.isReady())
+        {
+            Advertisement.Show();
+        }
+        else
+        {
+            Debug.LogWarning("CANNOT DISPAY AD");
+        }
+        //fader.LoadLevelInt(Application.loadedLevel);
+        fader.StartCoroutine("LoadLevelInt", Application.loadedLevel);
+        //Application.LoadLevel(Application.loadedLevel);
     }
 }

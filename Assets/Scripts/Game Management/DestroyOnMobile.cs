@@ -5,7 +5,7 @@ public class DestroyOnMobile : MonoBehaviour {
 
     public bool DestroyGameObject = true;
 
-#if !UNITY_ANDROID
+#if UNITY_ANDROID
     void Start()
     {
         if (DestroyGameObject)
