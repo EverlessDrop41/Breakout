@@ -23,14 +23,6 @@ public class BallBehaviour : MonoBehaviour {
 		speaker = this.gameObject.GetComponent<AudioSource>();
 	}
 
-    void Update()
-    {
-        if (Input.GetButtonDown("Start") /*|| Input.touches.Length > 0*/)
-        {
-            startInputReceived = true;
-        }
-    }
-
 	void FixedUpdate () {
         if (!hasStarted)
         {
@@ -39,7 +31,7 @@ public class BallBehaviour : MonoBehaviour {
                 RB.AddForce(Vector2.up, ForceMode2D.Impulse);
                 hasStarted = true;
             }
-            
+
         }
         else
         {
@@ -48,7 +40,7 @@ public class BallBehaviour : MonoBehaviour {
 		
 	}
 
-    public void MobileLaunch()
+    public void Launch()
     {
         startInputReceived = true;
     }

@@ -20,24 +20,31 @@ public class MainGameControl : MonoBehaviour {
 
     private GameObject currentBall;
 
+    private bool startedGame;
+
     void Start()
     {
         if (FindObjectsOfType<MainGameControl>().Length > 1)
         {
             Destroy(this);
         }
-        Advertisement.UnityDeveloperInternalTestMode = true;
+        Advertisement.Initialize("28602");
         #if !UNITY_ANDROID
             MobileButton.gameObject.SetActive(false);
-            Advertisement.Initialize("28602");
         #endif
     }
 
     public void MobileLaunchButton()
     {
+        if (!startedGame)
+        {
+            GetComponent<ScoreManager>().StartTimer();
+            startedGame = true;
+        }
+
         try
         {
-            currentBall.GetComponent<BallBehaviour>().MobileLaunch();
+            currentBall.GetComponent<BallBehaviour>().Launch();
             MobileButton.gameObject.SetActive(false);
         }
         catch
@@ -51,12 +58,23 @@ public class MainGameControl : MonoBehaviour {
         CreateBall();
         currentLives = maxLives;
     }
+ 
 
     private void Update()
     {
         if (Input.GetButtonDown("Cancel"))
         {
             Application.LoadLevel("MainMenu");
+        }
+
+        if (Input.GetButtonDown("Start") /*|| Input.touches.Length > 0*/)
+        {
+            if (!startedGame)
+            {
+                GetComponent<ScoreManager>().StartTimer();
+                startedGame = true;
+            }
+            currentBall.GetComponent<BallBehaviour>().Launch();
         }
 
         LivesDisplayer.text = string.Format(LivesMessageFormat, currentLives);
@@ -84,17 +102,29 @@ public class MainGameControl : MonoBehaviour {
 
     public void EndGame(bool won)
     {
-
-        if (Advertisement.isReady())
+        if ((Application.internetReachability != NetworkReachability.NotReachable &&  !won) && Advertisement.isInitialized)
         {
-            Advertisement.Show();
+            StartCoroutine(ShowAdWhenReady());
         }
         else
         {
-            Debug.LogWarning("CANNOT DISPAY AD");
+            fader.StartCoroutine("LoadLevelInt", Application.loadedLevel);
         }
-        //fader.LoadLevelInt(Application.loadedLevel);
-        fader.StartCoroutine("LoadLevelInt", Application.loadedLevel);
-        //Application.LoadLevel(Application.loadedLevel);
+    }
+
+    IEnumerator ShowAdWhenReady()
+    {
+        while (!Advertisement.isReady())
+            yield return null;
+
+        if (Advertisement.isReady())
+        {
+            Advertisement.Show(null, new ShowOptions {
+                resultCallback = result => {
+                    Debug.Log(result.ToString());
+                    fader.StartCoroutine("LoadLevelInt", Application.loadedLevel);
+                }
+            });
+        }
     }
 }

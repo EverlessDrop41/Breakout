@@ -24,7 +24,6 @@ public class ScoreManager : MonoBehaviour {
 
 	void Start () 
     {
-		CurrentScoreTimer.start();
 		NumberOfBlocks = GameObject.FindGameObjectsWithTag("Block").Length;
 		NumberOfBlocksLeft = NumberOfBlocks;
 #if !(UNITY_WEBPLAYER)
@@ -46,6 +45,11 @@ public class ScoreManager : MonoBehaviour {
 #endif
 	}
 
+    public void StartTimer()
+    {
+        CurrentScoreTimer.start();
+    }
+
 	void Update () 
     {
         Score = CurrentScoreTimer;
@@ -65,7 +69,6 @@ public class ScoreManager : MonoBehaviour {
             }
             #endif
             GetComponent<MainGameControl>().EndGame(true);
-            //MainGameControl.EndGame(true);
         }
 	}
 }
