@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Timers;
 
@@ -7,6 +8,7 @@ public class Fader : MonoBehaviour {
 
 	public Texture2D fadeOutTexture;	// the texture that will overlay the screen. This can be a black image or a loading graphic
 	public float fadeSpeed = 0.8f;		// the fading speed
+	public float delay = 0.1f;
 
 	private int drawDepth = -1000;		// the texture's order in the draw hierarchy: a low number means it renders on top
 	private float alpha = 1.0f;			// the texture's alpha value between 0 and 1
@@ -33,26 +35,36 @@ public class Fader : MonoBehaviour {
 		return (fadeSpeed);
 	}
 
-	void OnLevelWasLoaded()
+	void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
 	{
-        alpha = 1;
+		alpha = 1;
 		BeginFade(-1);
 	}
 
     public IEnumerator LoadLevel(string level)
     {
-        Debug.Log(1);
         float fadeTime = BeginFade(1);
-        yield return new WaitForSeconds(fadeTime);
-        Debug.Log(1.5);
-        Application.LoadLevel(level);
-        Debug.Log(2);
+		yield return new WaitForSeconds(fadeTime + delay);
+		SceneManager.LoadScene(level);
     }
 
     public IEnumerator LoadLevelInt(int level)
     {
         float fadeTime = BeginFade(1);
-        yield return new WaitForSeconds(fadeTime);
-        Application.LoadLevel(level);
+		yield return new WaitForSeconds(fadeTime + delay);
+		SceneManager.LoadScene(level);
     }
+
+	void OnEnable()
+	{
+		//Tell our 'OnLevelFinishedLoading' function to start listening for a scene change as soon as this script is enabled.
+		SceneManager.sceneLoaded += OnLevelFinishedLoading;
+	}
+
+	void OnDisable()
+	{
+		//Tell our 'OnLevelFinishedLoading' function to stop listening for a scene change as soon as this script is disabled. Remember to always have an unsubscription for every delegate you subscribe to!
+		SceneManager.sceneLoaded -= OnLevelFinishedLoading;
+	}
+
 }

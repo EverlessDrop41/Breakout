@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Advertisements;
+using UnityEngine.SceneManagement;
 
 using System.Collections;
 
@@ -64,7 +65,7 @@ public class MainGameControl : MonoBehaviour {
     {
         if (Input.GetButtonDown("Cancel"))
         {
-            Application.LoadLevel("MainMenu");
+			fader.StartCoroutine("LoadLevel", "MainMenu");
         }
 
         if (Input.GetButtonDown("Start") /*|| Input.touches.Length > 0*/)
@@ -108,7 +109,7 @@ public class MainGameControl : MonoBehaviour {
         }
         else
         {
-            fader.StartCoroutine("LoadLevelInt", Application.loadedLevel);
+			fader.StartCoroutine("LoadLevelInt", SceneManager.GetActiveScene().buildIndex);
         }
     }
 
@@ -122,7 +123,7 @@ public class MainGameControl : MonoBehaviour {
             Advertisement.Show(null, new ShowOptions {
                 resultCallback = result => {
                     Debug.Log(result.ToString());
-                    fader.StartCoroutine("LoadLevelInt", Application.loadedLevel);
+					fader.StartCoroutine("LoadLevelInt",  SceneManager.GetActiveScene().buildIndex);
                 }
             });
         }

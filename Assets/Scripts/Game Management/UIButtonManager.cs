@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class UIButtonManager : MonoBehaviour
@@ -14,12 +15,17 @@ public class UIButtonManager : MonoBehaviour
 
     public void LoadScene(int level)
     {
-        Application.LoadLevel(level);
+		fader.StartCoroutine("LoadLevelInt",level);
+		Debug.Log(0);
     }
 
     public void CloseGame()
     {
-        Application.Quit();
+		#if UNITY_EDITOR
+		UnityEditor.EditorApplication.isPlaying = false;
+		#else
+		Application.Quit();
+		#endif 
     }
 
     public void setQuality(int quality)

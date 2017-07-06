@@ -24,11 +24,9 @@ public class ResolutionManager : MonoBehaviour {
         initialToggleDone = true;
     }
 
-    public void UpdateWidth(dynamic width)
+	public void UpdateWidth(string width)
     {
-        object varWidth = width;
-        string strWidth = Convert.ToString(varWidth);
-        if (!int.TryParse(strWidth, out desiredWidth))
+        if (!int.TryParse(width, out desiredWidth))
         {
             errorDisplay.text = "Width must be a number";
         }
@@ -36,14 +34,11 @@ public class ResolutionManager : MonoBehaviour {
         {
             errorDisplay.text = "";
         }
-        Debug.Log(desiredHeight);
     }
 
-    public void UpdateHeight(dynamic height)
+    public void UpdateHeight(string height)
     {
-        object varHeight = height;
-        string strHeight = Convert.ToString(varHeight);
-        if (!int.TryParse(strHeight, out desiredHeight))
+		if (!int.TryParse(height, out desiredHeight))
         {
             errorDisplay.text = "Height must be a number";
         }
@@ -51,7 +46,6 @@ public class ResolutionManager : MonoBehaviour {
         {
             errorDisplay.text = "";
         }
-        Debug.Log(desiredHeight);
     }
 
     public void UpdateResolution()
