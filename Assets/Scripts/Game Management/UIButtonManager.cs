@@ -8,15 +8,20 @@ public class UIButtonManager : MonoBehaviour
 
     public void LoadScene(string level)
     {
-        //Application.LoadLevel(level);
+		if (!fader) { 
+			SceneManager.LoadScene (level);
+			return;
+		}
         fader.StartCoroutine("LoadLevel",level);
-        Debug.Log(0);
     }
 
     public void LoadScene(int level)
     {
+		if (!fader) { 
+			SceneManager.LoadScene (level);
+			return;
+		}
 		fader.StartCoroutine("LoadLevelInt",level);
-		Debug.Log(0);
     }
 
     public void CloseGame()
